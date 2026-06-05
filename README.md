@@ -1,6 +1,6 @@
 <div align="center">
 
-# CodeFlow — Module 00
+# Code Flow— Module 00
 
 ### Master Claude Code: from `/init` to the SDK
 
@@ -56,6 +56,9 @@ Each exercise builds on the previous one. ex04 integrates **everything** learned
 - A text editor of your choice
 
 For exercises with C++: compiler with `-std=c++17` support.
+
+> **Windows user?** This module is designed for macOS and Linux. If you're on Windows, use **WSL2** — you'll have a real Ubuntu environment and everything will work exactly the same.
+> → [WSL2 installation guide](https://learn.microsoft.com/en-us/windows/wsl/install)
 
 ---
 
