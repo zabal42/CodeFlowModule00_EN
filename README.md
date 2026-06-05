@@ -49,7 +49,7 @@ Each exercise builds on the previous one. ex04 integrates **everything** learned
 
 ## Requirements
 
-- Claude Code installed and authenticated (Pro account minimum)
+- Claude Code installed and authenticated with a plan that allows Claude Code usage.
 - Node.js >= 18 (for SDK and MCP)
 - `jq` installed (`sudo apt install jq` or `brew install jq`)
 - Git
@@ -60,6 +60,8 @@ For exercises with C++: compiler with `-std=c++17` support.
 ---
 
 ## How to start
+
+📄 **Subject:** [English](subject/codeflow_subject_v2.pdf)
 
 This repository is **for reference**. You don't submit here — you use it to read the subject and grab the starters.
 
