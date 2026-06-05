@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeFlow — Module 00 · Self-evaluation</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #ffffff; --bg-secondary: #f5f5f3; --bg-tertiary: #efefed;
+  --text: #1a1a18; --text-secondary: #6b6b67;
+  --border: rgba(0,0,0,0.12); --border-md: rgba(0,0,0,0.22);
+  --green: #1D9E75; --amber: #BA7517; --radius-md: 8px; --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #1c1c1a; --bg-secondary: #252523; --bg-tertiary: #2e2e2b; --text: #f0ede8; --text-secondary: #9a9994; --border: rgba(255,255,255,0.1); --border-md: rgba(255,255,255,0.2); }
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-tertiary); color: var(--text); min-height: 100vh; padding: 0 0 3rem; }
+.top-bar { background: var(--bg); border-bottom: 0.5px solid var(--border); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+.top-bar h1 { font-size: 16px; font-weight: 500; flex: 1; }
+.top-bar .version { font-size: 12px; color: var(--text-secondary); background: var(--bg-secondary); border: 0.5px solid var(--border); border-radius: 6px; padding: 3px 8px; }
+.container { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem; }
+.intro { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.5rem; }
+.intro p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+.intro strong { color: var(--text); font-weight: 500; }
+.scoreboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1rem; }
+.score-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 0.875rem 1rem; text-align: center; }
+.score-card .label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
+.score-card .value { font-size: 22px; font-weight: 500; }
+.score-card.total .value { color: var(--green); }
+.progress-bar-wrap { background: var(--bg-secondary); border-radius: 4px; height: 6px; margin-bottom: 1.5rem; overflow: hidden; }
+.progress-bar { height: 100%; background: var(--green); border-radius: 4px; transition: width 0.3s ease; }
+.exercise { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); margin-bottom: 0.875rem; overflow: hidden; }
+.ex-header { display: flex; align-items: center; gap: 10px; padding: 1rem 1.25rem; cursor: pointer; user-select: none; }
+.ex-header:hover { background: var(--bg-secondary); }
+.ex-badge { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 6px; background: var(--bg-secondary); color: var(--text-secondary); border: 0.5px solid var(--border); white-space: nowrap; }
+.ex-title { font-size: 15px; font-weight: 500; flex: 1; }
+.ex-progress { font-size: 13px; white-space: nowrap; }
+.ex-chevron { font-size: 18px; color: var(--text-secondary); transition: transform 0.2s; }
+.ex-chevron.open { transform: rotate(180deg); }
+.ex-body { padding: 0 1.25rem 1.25rem; display: none; }
+.ex-body.open { display: block; }
+.section-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); margin: 1rem 0 0.5rem; }
+.check-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 8px; border-radius: 6px; cursor: pointer; }
+.check-item:hover { background: var(--bg-secondary); }
+.check-box { width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid var(--border-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: all 0.15s; font-size: 13px; }
+.check-box.checked { background: var(--green); border-color: var(--green); color: white; }
+.check-box.explain { background: var(--amber); border-color: var(--amber); color: white; }
+.check-box.pd { background: #534AB7; border-color: #534AB7; color: white; }
+.check-text { font-size: 14px; line-height: 1.5; flex: 1; }
+.check-text.done { color: var(--text-secondary); text-decoration: line-through; }
+.check-type { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; margin-top: 3px; }
+.type-m { background: #E6F1FB; color: #185FA5; }
+.type-e { background: #FAEEDA; color: #854F0B; }
+.type-b { background: #EAF3DE; color: #3B6D11; }
+.type-pd { background: #EEEDFE; color: #534AB7; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; margin-top: 3px; display: inline-block; }
+@media (prefers-color-scheme: dark) {
+  .type-m { background: #0C447C; color: #B5D4F4; }
+  .type-e { background: #633806; color: #FAC775; }
+  .type-b { background: #27500A; color: #C0DD97; }
+  .type-pd { background: #3C3489; color: #CECBF6; }
+}
+.verdict { margin-top: 1.5rem; padding: 1.5rem; border-radius: var(--radius-lg); background: var(--bg); border: 0.5px solid var(--border); text-align: center; display: none; }
+.verdict .emoji { font-size: 36px; margin-bottom: 10px; }
+.verdict .title { font-size: 17px; font-weight: 500; margin-bottom: 6px; }
+.verdict .sub { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+.footer { text-align: center; margin-top: 2rem; font-size: 12px; color: var(--text-secondary); }
+.footer a { color: var(--text-secondary); }
+.reset-btn { display: block; margin: 1rem auto 0; font-size: 13px; color: var(--text-secondary); background: none; border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 7px 18px; cursor: pointer; }
+.reset-btn:hover { background: var(--bg-secondary); }
+@media (max-width: 480px) { .scoreboard { grid-template-columns: repeat(2, 1fr); } .top-bar h1 { font-size: 14px; } }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <h1>CodeFlow — Module 00 · Self-evaluation</h1>
+  <span class="version">v2.0</span>
+</div>
+<div class="container">
+  <div class="intro">
+    <p>Check each item when you've done it <strong>and</strong> you can explain it. The <strong>"Can you explain it?"</strong> column is as important as mandatory — if it works but you don't understand it, it doesn't count.</p>
+  </div>
+  <div class="scoreboard" id="scoreboard"></div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progressbar" style="width:0%"></div></div>
+  <div id="exercises"></div>
+  <div class="verdict" id="verdict"></div>
+  <button class="reset-btn" onclick="markAllDone()" style="margin-top:0.5rem; border-color: #534AB7; color: #534AB7;">👾 Cheat mode</button>
+  <button class="reset-btn" onclick="resetAll()">Reset everything</button>
+  <div class="footer">
+    <p>© 2026 Mikel Zabal – <a href="https://www.linkedin.com/in/mikel-zabal-martin/" target="_blank">CodingWithZabal</a> · <a href="https://github.com/zabal42/CodeFlowModule00_EN" target="_blank">GitHub</a></p>
+  </div>
+</div>
+<script>
+const data=[
+  {id:'ex00',name:'Init & Context',checks:[
+    {t:'m',text:'I ran /init in the starter directory'},
+    {t:'m',text:'I examined the generated CLAUDE.md and documented what Claude detected'},
+    {t:'m',text:'CLAUDE.md includes compilation rules (flags, C++ standard, directory structure)'},
+    {t:'m',text:'CLAUDE.md includes style restrictions (variable names, comment format)'},
+    {t:'m',text:'CLAUDE.md limits the directories Claude can modify to src/ and inc/'},
+    {t:'m',text:'CLAUDE.md includes the instruction to respond in English'},
+    {t:'m',text:'I used @src/Calculator.cpp to limit context to one file'},
+    {t:'m',text:'I used @tests/ to limit context to the tests folder'},
+    {t:'m',text:'I have at least 3 screenshots in screenshots/ demonstrating @ usage'},
+    {t:'m',text:'NOTES.md compares the original CLAUDE.md vs the customized one'},
+    {t:'e',text:'I can explain why I chose each rule in my CLAUDE.md'},
+    {t:'e',text:'I can explain exactly what @ does and how it affects context'},
+    {t:'b',text:'"Common mistakes" section in CLAUDE.md (e.g.: don\'t use printf, don\'t touch the Makefile)'},
+    {t:'b',text:'Second CLAUDE.md in tests/ with testing-specific rules'},
+  ]},
+  {id:'ex01',name:'Session Management',checks:[
+    {t:'m',text:'I ran the complete 9-step scenario on the ex00 project'},
+    {t:'m',text:'session_log.txt records all 9 steps with real observations'},
+    {t:'m',text:'I ran /compact and documented what Claude remembered and what it forgot'},
+    {t:'m',text:'I ran /compact [instructions] and compared it with the normal compact'},
+    {t:'m',text:'I demonstrated the use of /clean'},
+    {t:'m',text:'I demonstrated the use of Esc Esc to interrupt an operation'},
+    {t:'m',text:'NOTES.md answers: when /compact vs /clean? When is double Esc critical?'},
+    {t:'m',text:'NOTES.md includes at least 2 personal strategies to minimize token usage'},
+    {t:'e',text:'I can explain what information survives a /compact and why'},
+    {t:'e',text:'I can explain the real difference between /compact and /clean'},
+    {t:'b',text:'Comparative table: operation → tokens consumed'},
+    {t:'b',text:'I identified which operations consume the most context and why'},
+  ]},
+  {id:'ex02',name:'HookGuard',checks:[
+    {t:'m',text:'I created a PostToolUse inspection hook with matcher "*" that dumps stdin to JSON'},
+    {t:'m',text:'I made Claude use at least 3 tools (Read, Write, Bash) and examined the JSONs'},
+    {t:'m',text:'hooks/guard.sh blocks rm -rf and sudo'},
+    {t:'m',text:'hooks/guard.sh logs all bash commands to logs/commands.log with timestamp'},
+    {t:'m',text:'hooks/compiler_check.sh runs make after every Write on .cpp or .hpp'},
+    {t:'m',text:'If compilation fails, the error is passed back to Claude for correction'},
+    {t:'m',text:'hooks/compiler_check.sh logs OK/FAIL + timestamp to logs/compile.log'},
+    {t:'m',text:'settings.json has both hooks configured (Pre and Post)'},
+    {t:'m',text:'logs/commands.log has at least 5 entries with timestamp'},
+    {t:'m',text:'logs/compile.log has at least 3 entries (with OK and FAIL)'},
+    {t:'m',text:'NOTES.md explains the JSON structure of each tool'},
+    {t:'e',text:'I can explain why exit 2 blocks the operation and exit 0 allows it'},
+    {t:'e',text:'I can explain why I inspect with jq FIRST before writing the hook'},
+    {t:'e',text:'I can explain how the PostToolUse stdout reaches Claude as feedback'},
+    {t:'b',text:'Notification hook that warns in notifications.log when Claude has been idle >60s'},
+    {t:'b',text:'Stop hook that runs make clean && make at the end of each Claude turn'},
+    {t:'b',text:'settings.local.json with absolute paths + explanation of why they\'re safer'},
+  ]},
+  {id:'ex03',name:'PlayBot',checks:[
+    {t:'m',text:'I installed the Playwright MCP server'},
+    {t:'m',text:'mcp_config.json is configured and Claude Code detects it'},
+    {t:'m',text:'I captured a screenshot of the available MCP tool verification'},
+    {t:'m',text:'Claude navigated to a public website and extracted specific data'},
+    {t:'m',text:'reports/github_profile.md contains real extracted data'},
+    {t:'m',text:'I designed a test that verifies page load (status 200)'},
+    {t:'m',text:'The test checks that a specific element exists on the page'},
+    {t:'m',text:'reports/test_results.md has at least 2 tests (PASS/FAIL + timestamp)'},
+    {t:'m',text:'screenshots/ has process captures'},
+    {t:'m',text:'NOTES.md explains the MCP pattern: configure → verify → use'},
+    {t:'e',text:'I can explain what MCP is and why it\'s Claude Code\'s plugin system'},
+    {t:'e',text:'I can explain the configure→verify→use pattern in my own words'},
+    {t:'b',text:'Second MCP server configured and used in the same session'},
+    {t:'b',text:'PostToolUse hook from ex02 combined with Playwright (logs each visited page)'},
+  ]},
+  {id:'ex04',name:'SDK Bridge',checks:[
+    {t:'m',text:'Step 1: my C++ program reads and parses sample_report.json correctly'},
+    {t:'m',text:'Step 2: bridge.mjs receives a .cpp path, analyzes it via SDK and generates JSON'},
+    {t:'m',text:'Step 2: I use allowedTools: ["Read"] to limit what Claude can do'},
+    {t:'m',text:'Step 3: CodeReviewer launches bridge.mjs with system()'},
+    {t:'m',text:'Step 3: I read the generated JSON and display it via stdout'},
+    {t:'m',text:'Step 3: I handle errors (file not found, SDK unavailable, malformed JSON)'},
+    {t:'m',text:'Step 4: I detect the memory leak in leak.cpp'},
+    {t:'m',text:'Step 4: I detect the uninitialized variable in uninit.cpp'},
+    {t:'m',text:'Step 4: I detect the logic bug in logic_bug.cpp'},
+    {t:'m',text:'The program compiles with -Wall -Wextra -Werror -std=c++17'},
+    {t:'m',text:'NOTES.md explains the full flow: C++ → system() → bridge.mjs → SDK → Claude → JSON → C++'},
+    {t:'e',text:'I can explain why C++ doesn\'t call the SDK directly and needs the bridge'},
+    {t:'e',text:'I can explain exactly what system() does and its risks'},
+    {t:'e',text:'I can explain why I limit to allowedTools: ["Read"]'},
+    {t:'b',text:'Stop hook from ex02 that runs CodeReviewer automatically and logs to logs/review.log'},
+    {t:'b',text:'I replaced system() with fork()/exec() and can explain the difference'},
+    {t:'pd',text:'Princess Donut Celestial Level — review result arrives via Telegram/Slack via curl. Launch the process, hit the gym, and the message is waiting on your phone.'},
+  ]}
+];
+
+let state=JSON.parse(localStorage.getItem('codeflow_m00_en_v2')||'{}');
+localStorage.removeItem('codeflow_m00_en');
+function save(){localStorage.setItem('codeflow_m00_en_v2',JSON.stringify(state));}
+
+const CORE_TOTAL=62;
+function getScore(){
+  let dM=0,dE=0,dB=0,dPD=0;
+  data.forEach(ex=>ex.checks.forEach((c,i)=>{
+    const done=!!state[ex.id+'_'+i];
+    if(c.t==='m'&&done)dM++;
+    if(c.t==='e'&&done)dE++;
+    if(c.t==='b'&&done)dB++;
+    if(c.t==='pd'&&done)dPD++;
+  }));
+  const core=dM+dE;
+  const coreComplete=core===CORE_TOTAL;
+  const score=(dPD===1&&coreComplete)?100:core;
+  return{dM,dE,dB,dPD,core,coreComplete,score};
+}
+function getStats(){
+  let tM=0,dM=0,tE=0,dE=0,tB=0,dB=0;
+  data.forEach(ex=>ex.checks.forEach((c,i)=>{
+    const done=!!state[ex.id+'_'+i];
+    if(c.t==='m'){tM++;if(done)dM++;}
+    if(c.t==='e'){tE++;if(done)dE++;}
+    if(c.t==='b'||c.t==='pd'){tB++;if(done)dB++;}
+  }));
+  return{tM,dM,tE,dE,tB,dB};
+}
+function renderScoreboard(){
+  const{dM,dE,dB,dPD,core,coreComplete,score}=getScore();
+  const{tM,tE,tB}=getStats();
+  const pct=(dPD===1&&coreComplete)?100:Math.round(core/CORE_TOTAL*100);
+  document.getElementById('scoreboard').innerHTML=`
+    <div class="score-card"><div class="label">Mandatory</div><div class="value">${dM}/${tM}</div></div>
+    <div class="score-card"><div class="label">Explain</div><div class="value">${dE}/${tE}</div></div>
+    <div class="score-card"><div class="label">Bonus</div><div class="value">${dB}/${tB}</div></div>
+    <div class="score-card total"><div class="label">Score</div><div class="value">${score}/100</div></div>`;
+  document.getElementById('progressbar').style.width=pct+'%';
+}
+function renderVerdict(){
+  const{dM,dE,dPD,core,coreComplete,score}=getScore();
+  const{tM,tE}=getStats();
+  const v=document.getElementById('verdict');
+  if(coreComplete&&dPD===1){
+    v.style.display='block';
+    v.innerHTML='<div class="emoji">👑</div><div class="title">Princess Donut Celestial Level — 100/100</div><div class="sub">You completed the entire module. The review hits your phone, you\'re at the gym.<br>You haven\'t learned to use Claude Code: you\'ve learned to control it.<br><br>By Toutatis!!</div>';
+  }else if(coreComplete){
+    v.style.display='block';
+    v.innerHTML=`<div class="emoji">🏆</div><div class="title">Core complete — 62/100</div><div class="sub">All mandatory and all explanations done. Just one last level...<br><br>Do you dare take on the <strong>👑 Princess Donut Celestial Level</strong>?<br>Implement the review via Telegram/Slack, launch the process, hit the gym and wait for the message on your phone. If you make it: <strong>100/100</strong>.</div>`;
+  }else if(core>0){
+    const pendM=tM-dM;
+    const pendE=tE-dE;
+    let msg='';
+    if(pendM>0&&pendE>0) msg=`${pendM} mandatory and ${pendE} explanations pending.`;
+    else if(pendM>0) msg=`${pendM} mandatory items pending.`;
+    else if(pendE>0) msg=`${pendE} explanations pending.`;
+    else msg='All core complete! Check 👑 Princess Donut to reach 100.';
+    v.style.display='block';
+    v.innerHTML=`<div class="emoji">${core<20?'🟡':core<45?'🔵':'🟢'}</div><div class="title">${core}/100 points</div><div class="sub">${msg}</div>`;
+  }else{v.style.display='none';}
+}
+function toggleCheck(exId,idx){
+  state[exId+'_'+idx]=!state[exId+'_'+idx];
+  save();renderAll();
+}
+function renderExercises(){
+  const container=document.getElementById('exercises');
+  container.innerHTML='';
+  const lbl={m:['Mandatory','type-m'],e:['Can you explain it?','type-e'],b:['Bonus','type-b'],pd:['👑 Princess Donut Celestial Level','type-pd']};
+  data.forEach(ex=>{
+    let m=0,dm=0;
+    ex.checks.forEach((c,i)=>{if(c.t==='m'){m++;if(state[ex.id+'_'+i])dm++;}});
+    const open=!!state['open_'+ex.id];
+    const div=document.createElement('div');
+    div.className='exercise';
+    const checks=ex.checks.map((c,i)=>{
+      const done=!!state[ex.id+'_'+i];
+      const[label,cls]=lbl[c.t];
+      const boxCls=done?(c.t==='e'?'explain':c.t==='pd'?'pd':'checked'):'';
+      return`<div class="check-item" onclick="toggleCheck('${ex.id}',${i})">
+        <div class="check-box ${boxCls}">${done?'<i class="ti ti-check"></i>':''}</div>
+        <div style="flex:1"><div class="check-text ${done?'done':''}">${c.text}</div>
+        <span class="check-type ${cls}">${label}</span></div></div>`;
+    }).join('');
+    div.innerHTML=`
+      <div class="ex-header" onclick="toggleEx('${ex.id}')">
+        <span class="ex-badge">${ex.id}</span>
+        <span class="ex-title">${ex.name}</span>
+        <span class="ex-progress" style="color:${dm===m?'var(--green)':'var(--amber)'}">${dm}/${m} mandatory</span>
+        <i class="ti ti-chevron-down ex-chevron ${open?'open':''}"></i>
+      </div>
+      <div class="ex-body ${open?'open':''}">${checks}</div>`;
+    container.appendChild(div);
+  });
+}
+function toggleEx(id){state['open_'+id]=!state['open_'+id];save();renderExercises();}
+function renderAll(){renderScoreboard();renderExercises();renderVerdict();}
+function markAllDone(){data.forEach(ex=>ex.checks.forEach((c,i)=>{state[ex.id+'_'+i]=true;}));save();renderAll();}
+function resetAll(){if(confirm('Reset all checks?')){state={};save();renderAll();}}
+renderAll();
+</script>
+</body>
+</html>

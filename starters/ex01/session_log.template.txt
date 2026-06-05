@@ -1,0 +1,80 @@
+# Session log — ex01
+
+Date: ___________
+Project: ex00 (Calculator)
+
+---
+
+[STEP 1] — Project structure analysis
+Claude's response:
+My observation:
+
+---
+
+[STEP 2] — Locate Calculator main function
+Claude's response:
+My observation:
+
+---
+
+[STEP 3] — Add new method
+Method added:
+My observation:
+
+---
+
+[STEP 4] — Run make
+Result:
+My observation:
+
+---
+
+[STEP 5] — Deliberate error introduced
+Error type:
+Line:
+
+---
+
+[STEP 6] — Diagnosis and fix
+How Claude diagnosed it:
+Fix applied:
+My observation:
+
+---
+
+[STEP 7] — /compact
+Command used:
+What survived in summary:
+What was lost:
+
+---
+
+[STEP 8] — New modification related to step 3
+Request:
+Did Claude remember the context from step 3?:
+What did it need to re-read?:
+
+---
+
+[STEP 9] — Final analysis
+What Claude remembered after /compact:
+What it had to re-read:
+General conclusion:
+
+---
+
+[COMPACT WITH INSTRUCTIONS]
+Command used: /compact [___________]
+Difference from normal compact:
+
+---
+
+[/clean]
+When used:
+Effect observed:
+
+---
+
+[Esc Esc]
+Situation where I used it:
+Effect:
