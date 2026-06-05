@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.png" alt="CodeFlow logo" width="250">
+
 # Code Flow— Module 00
 
 ### Master Claude Code: from `/init` to the SDK
